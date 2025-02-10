@@ -64,7 +64,12 @@ function submitForm(requestBody) {
                 status = "Failed";
             }
 
-            let emailMessage = `Status: ${status + "\n\n"} ${JSON.stringify(data, null, 2)}`;
+            let emailMessage = `Status: ${status}
+            \n\n
+            ${"Key Tasks: " + requestBody.MultiLine + "\n\nMeeting Highlights: " + requestBody.MultiLine6} 
+            \n\n
+            ${JSON.stringify(data, null, 2)}
+            `;
             sendEmail("Auto WI Form Submission Report", emailMessage);
 
             console.log("Status: " + status);
