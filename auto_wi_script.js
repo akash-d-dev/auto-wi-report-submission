@@ -161,7 +161,7 @@ cron.schedule('30 17 * * 1-5', () => {
     timezone: "Asia/Kolkata"
 });
 
-console.log("Scheduler is running. The task will execute every weekday at 5 PM.");
+console.log("Scheduler is running. The task will execute every weekday at 5:30 PM.");
 
 
 app.get('/', (req, res) => {
