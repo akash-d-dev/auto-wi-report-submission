@@ -1,4 +1,38 @@
 const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+function sendEmail(subject, message) {
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_APP_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    let mailOptions = {
+        from: process.env.GMAIL_USER,
+        to: "akash.singh@kalvium.community",
+        subject: subject,
+        text: message
+    };
+
+    console.log("Sending email...");
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error("Error sending email:", error);
+        } else {
+            console.log("Email sent successfully:", info.response);
+        }
+    });
+}
 
 
 function submitForm(requestBody) {
@@ -23,10 +57,22 @@ function submitForm(requestBody) {
     })
         .then(response => response.json())
         .then(data => {
-            data.open_thankyou_page_URL_in == 1 ? console.log("Success") : console.log("Fail")
-            // console.log(data);
+            let status = ""
+            if (data.open_thankyou_page_URL_in == 1) {
+                status = "Success";
+            } else {
+                status = "Failed";
+            }
+
+            let emailMessage = `Status: ${status + "\n\n"} ${JSON.stringify(data, null, 2)}`;
+            sendEmail("Auto WI Form Submission Report", emailMessage);
+
+            console.log("Status: " + status);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            sendEmail("FAILED - Auto WI Form Submission Report", `Error: ${error}`);
+        });
 }
 
 function createRequestBody(email, workIntegrationType, companyName, keyTasks, meetingHighlights) {
@@ -91,13 +137,15 @@ function getFormValues() {
         keyTasks: getRandomkeyTasks(),
         meetingHighlights: getRandomMeetingHighlights()
     };
+
+    // return {
+    //     email: "a@kalvium.community",
+    //     workIntegrationType: "Work Integrated - Industry",
+    //     companyName: "Morgan Stanley",
+    //     keyTasks: "Review",
+    //     meetingHighlights: "Review"
+    // };
 }
-
-// const requestBody = createRequestBody(getFormValues());
-// console.log(requestBody);
-// submitForm(requestBody);
-
-
 // Schedule job to run Monday to Friday at 5 PM
 cron.schedule('0 17 * * 1-5', () => {
     console.log("Running scheduled task at 5 PM...");
@@ -111,3 +159,4 @@ cron.schedule('0 17 * * 1-5', () => {
 });
 
 console.log("Scheduler is running. The task will execute every weekday at 5 PM.");
+
