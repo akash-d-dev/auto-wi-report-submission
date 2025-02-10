@@ -150,7 +150,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Schedule job to run Monday to Friday at 5 PM
-cron.schedule('0 17 * * 1-5', () => {
+cron.schedule('30 17 * * 1-5', () => {
     console.log("Running scheduled task at 5 PM...");
     const formValues = getFormValues();
     const requestBody = createRequestBody(formValues.email, formValues.workIntegrationType, formValues.companyName, formValues.keyTasks, formValues.meetingHighlights);
