@@ -1,5 +1,6 @@
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
+const express = require('express');
 require('dotenv').config();
 
 function sendEmail(subject, message) {
@@ -33,7 +34,6 @@ function sendEmail(subject, message) {
         }
     });
 }
-
 
 function submitForm(requestBody) {
     fetch("https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw/records", {
@@ -128,7 +128,6 @@ function getRandomMeetingHighlights() {
     return meetingHighlights[Math.floor(Math.random() * meetingHighlights.length)];
 }
 
-
 function getFormValues() {
     return {
         email: "akash.singh@kalvium.community",
@@ -146,6 +145,10 @@ function getFormValues() {
     //     meetingHighlights: "Review"
     // };
 }
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 // Schedule job to run Monday to Friday at 5 PM
 cron.schedule('0 17 * * 1-5', () => {
     console.log("Running scheduled task at 5 PM...");
@@ -160,3 +163,11 @@ cron.schedule('0 17 * * 1-5', () => {
 
 console.log("Scheduler is running. The task will execute every weekday at 5 PM.");
 
+
+app.get('/', (req, res) => {
+    res.send("Server is running!");
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
