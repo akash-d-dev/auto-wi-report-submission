@@ -157,7 +157,7 @@ function sendEmail(subject, message) {
 // Scheduler
 ///////////////////////////////////////////////////////////////////
 cron.schedule(
-  "30 17 * * 1-5",
+  "00 18 * * 1-5",
   () => {
     console.log("Running scheduled task at 5:30 PM...");
     const formValues = getFormValues();
