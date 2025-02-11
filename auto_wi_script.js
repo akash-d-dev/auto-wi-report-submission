@@ -156,10 +156,13 @@ function sendEmail(subject, message) {
 ///////////////////////////////////////////////////////////////////
 // Scheduler
 ///////////////////////////////////////////////////////////////////
+const hrs = 17; //24-hour format
+const mins = 15;
+
 cron.schedule(
-  "00 18 * * 1-5",
+  `${mins} ${hrs} * * 1-5`,
   () => {
-    console.log("Running scheduled task at 5:30 PM...");
+    console.log(`Running scheduled task at ${hrs}:${mins}...`);
     const formValues = getFormValues();
     const requestBody = createRequestBody(
       formValues.email,
@@ -173,7 +176,7 @@ cron.schedule(
   { scheduled: true, timezone: "Asia/Kolkata" }
 );
 console.log(
-  "Scheduler is running. The task will execute every weekday at 5:30 PM."
+  `Scheduler is running. The task will execute every weekday at ${hrs}:${mins}.`
 );
 
 ///////////////////////////////////////////////////////////////////
