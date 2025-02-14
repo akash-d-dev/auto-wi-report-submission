@@ -1,29 +1,31 @@
-const cron = require("node-cron");
-const nodemailer = require("nodemailer");
-const express = require("express");
-require("dotenv").config();
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+const express = require('express');
+require('dotenv').config();
 
 ///////////////////////////////////////////////////////////////////
 // Utility Functions - Random Data
 ///////////////////////////////////////////////////////////////////
 function getRandomkeyTasks() {
   const keyTasks = [
-    "Extension Development.\nAPI Integration.",
-    "Run Test Pipeline.\nWrite Documentation.",
-    "Raise new MR.\nReview MR.",
-    "Extension Development.\nRun Test Pipeline.",
-    "Read Cortex Docs.\nWrite Documentation.",
+    'Extension Development, API Integration.',
+    'Run Test Pipeline, Write Documentation.',
+    'Raise new MR, Review MR.',
+    'Extension Development, Run Test Pipeline.',
+    'Read Cortex Docs, Write Documentation.',
+    'Fix Bugs and push the changes in new branch.',
   ];
   return keyTasks[Math.floor(Math.random() * keyTasks.length)];
 }
 
 function getRandomMeetingHighlights() {
   const meetingHighlights = [
-    "MR Review.\nCode Review.",
-    "New Extension Overview.\nExtension API Integration.",
-    "Test Pipeline Run.",
-    "Discussed Scripts.",
-    "Trigger Overview.\nJob decorator Overview.",
+    'MR Reviewed, Code Reviewed.',
+    'New Extension Overview, Extension API Integration.',
+    'Ran Test Pipeline and discussed the results.',
+    'Discussed Extension Scripts.',
+    'Trigger decorator overview, Job decorator Overview.',
+    'Studio Extension Overview, Extension API Integration.',
   ];
   return meetingHighlights[
     Math.floor(Math.random() * meetingHighlights.length)
@@ -35,9 +37,9 @@ function getRandomMeetingHighlights() {
 ///////////////////////////////////////////////////////////////////
 function getFormValues() {
   return {
-    email: "akash.singh@kalvium.community",
-    workIntegrationType: "Work Integrated - Industry",
-    companyName: "Medable",
+    email: 'akash.singh@kalvium.community',
+    workIntegrationType: 'Work Integrated - Industry',
+    companyName: 'Medable',
     keyTasks: getRandomkeyTasks(),
     meetingHighlights: getRandomMeetingHighlights(),
   };
@@ -58,20 +60,20 @@ function createRequestBody(
   meetingHighlights
 ) {
   const today = new Date();
-  const day = today.getDate().toString().padStart(2, "0");
+  const day = today.getDate().toString().padStart(2, '0');
   const monthAbbreviations = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   const month = monthAbbreviations[today.getMonth()];
   const year = today.getFullYear();
@@ -80,52 +82,52 @@ function createRequestBody(
   return {
     Email: email,
     Date: formattedDate,
-    TermsConditions: "true",
+    TermsConditions: 'true',
     Dropdown: workIntegrationType,
     Dropdown1: companyName,
     MultiLine: keyTasks,
-    Slider: "5",
-    MultiLine1: "",
-    Slider2: "5",
-    MultiLine5: "",
-    Radio: "Yes",
+    Slider: '5',
+    MultiLine1: '',
+    Slider2: '5',
+    MultiLine5: '',
+    Radio: 'Yes',
     MultiLine6: meetingHighlights,
     REFERRER_NAME:
-      "https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/thankyou/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw",
+      'https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/thankyou/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw',
   };
 }
 
 function submitForm(requestBody) {
   fetch(
-    "https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw/records",
+    'https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw/records',
     {
       headers: {
-        accept: "application/zoho.forms-v1+json",
-        "content-type": "application/json",
+        accept: 'application/zoho.forms-v1+json',
+        'content-type': 'application/json',
       },
       body: JSON.stringify(requestBody),
-      method: "POST",
+      method: 'POST',
     }
   )
     .then((response) => response.json())
     .then((data) => {
-      let status = data.open_thankyou_page_URL_in == 1 ? "Success" : "Failed";
+      let status = data.open_thankyou_page_URL_in == 1 ? 'Success' : 'Failed';
       let emailMessage = `Status: ${status}\nKey Tasks: ${
         requestBody.MultiLine
       }\nMeeting Highlights: ${
         requestBody.MultiLine6
       }\nResponse Data: ${JSON.stringify(data)}`;
-      sendEmail("Auto WI Form Submission Report", emailMessage);
+      sendEmail('Auto WI Form Submission Report', emailMessage);
     })
     .catch((error) => {
-      console.error("Error:", error);
-      sendEmail("FAILED - Auto WI Form Submission Report", `Error: ${error}`);
+      console.error('Error:', error);
+      sendEmail('FAILED - Auto WI Form Submission Report', `Error: ${error}`);
     });
 }
 
 function sendEmail(subject, message) {
   let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: 'smtp.gmail.com',
     port: 587,
     secure: false,
     auth: {
@@ -139,16 +141,16 @@ function sendEmail(subject, message) {
 
   let mailOptions = {
     from: process.env.GMAIL_USER,
-    to: "akash.singh@kalvium.community",
+    to: 'akash.singh@kalvium.community',
     subject: subject,
     text: message,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error("Error sending email:", error);
+      console.error('Error sending email:', error);
     } else {
-      console.log("Email sent successfully:", info.response);
+      console.log('Email sent successfully:', info.response);
     }
   });
 }
@@ -173,7 +175,7 @@ cron.schedule(
     );
     submitForm(requestBody);
   },
-  { scheduled: true, timezone: "Asia/Kolkata" }
+  { scheduled: true, timezone: 'Asia/Kolkata' }
 );
 console.log(
   `Scheduler is running. The task will execute every weekday at ${hrs}:${mins}.`
@@ -185,8 +187,8 @@ console.log(
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  res.send("Server is running!");
+app.get('/', (req, res) => {
+  res.send('Server is running!');
 });
 
 app.listen(PORT, () => {
