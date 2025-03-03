@@ -71,7 +71,6 @@ function submitForm(requestBody) {
           'content-type': 'application/json',
           Referer:
             'https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw',
-          'Referrer-Policy': 'strict-origin-when-cross-origin'
         },
         body: JSON.stringify(requestBody),
         method: 'POST'
