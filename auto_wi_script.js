@@ -64,30 +64,43 @@ function createRequestBody(person, formValues) {
 
 function submitForm(requestBody) {
     fetch(
-        'https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw/records',
-        {
-            headers: {
-                accept: 'application/zoho.forms-v1+json',
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(requestBody),
-            method: 'POST'
-        }
+      'https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw/records',
+      {
+        headers: {
+          accept: 'application/zoho.forms-v1+json',
+          'content-type': 'application/json',
+          Referer:
+            'https://forms.zohopublic.in/gurmindersinghkal1/form/Signup/formperma/GeJFMLBDfoWlIJfhI46Qyx0Dlf3kHhMSRsvMItq_Riw',
+          'Referrer-Policy': 'strict-origin-when-cross-origin'
+        },
+        body: JSON.stringify(requestBody),
+        method: 'POST'
+      }
     )
-        .then((response) => response.json())
-        .then((data) => {
-            let status = data.open_thankyou_page_URL_in == 1 ? 'Success' : 'Failed';
-            let emailMessage = `Status: ${status}\nKey Tasks: ${requestBody.MultiLine || 'N/A'}`;
-            if (requestBody.MultiLine6) {
-                emailMessage += `\nMeeting Highlights: ${requestBody.MultiLine6}`;
-            }
-            emailMessage += `\nResponse Data: ${JSON.stringify(data)}`;
-            sendEmail('Auto Form Submission Report', emailMessage, requestBody.Email);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            sendEmail('FAILED - Auto Form Submission Report', `Error: ${error}`, requestBody.Email);
-        });
+      .then((response) => response.json())
+      .then((data) => {
+        let status = data.open_thankyou_page_URL_in == 1 ? 'Success' : 'Failed'
+        let emailMessage = `Status: ${status}\nKey Tasks: ${
+          requestBody.MultiLine || 'N/A'
+        }`
+        if (requestBody.MultiLine6) {
+          emailMessage += `\nMeeting Highlights: ${requestBody.MultiLine6}`
+        }
+        emailMessage += `\nResponse Data: ${JSON.stringify(data)}`
+        sendEmail(
+          'Auto Form Submission Report',
+          emailMessage,
+          requestBody.Email
+        )
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+        sendEmail(
+          'FAILED - Auto Form Submission Report',
+          `Error: ${error}`,
+          requestBody.Email
+        )
+      })
 }
 
 function sendEmail(subject, message, to) {
