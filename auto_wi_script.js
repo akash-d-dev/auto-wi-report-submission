@@ -130,8 +130,8 @@ function sendEmail(subject, message, to) {
 ///////////////////////////////////////////////////////////////////
 // Scheduler
 ///////////////////////////////////////////////////////////////////
-const hrs = 18; // 24-hour format
-const mins = 52;
+const hrs = 17; // 24-hour format
+const mins = 15;
 
 cron.schedule(
     `${mins} ${hrs} * * 1-5`,
