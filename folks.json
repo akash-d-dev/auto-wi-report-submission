@@ -1,0 +1,30 @@
+[
+    {
+        "type": "wi",
+        "email": "akash.singh@kalvium.community",
+        "company": "Medable",
+        "keyTasks": [
+            "Extension Development, API Integration.",
+            "Run Test Pipeline, Write Documentation.",
+            "Raise new MR, Review MR.",
+            "Extension Development, Run Test Pipeline.",
+            "Read Cortex Docs, Write Documentation.",
+            "Fix Bugs and push the changes in new branch."
+        ],
+        "meetingHighlights": [
+            "MR Reviewed, Code Reviewed.",
+            "New Extension Overview, Extension API Integration.",
+            "Ran Test Pipeline and discussed the results.",
+            "Discussed Extension Scripts.",
+            "Trigger decorator overview, Job decorator Overview.",
+            "Studio Extension Overview, Extension API Integration."
+        ]
+    },{
+        "type": "sw",
+        "email": "nihit.yadav@kalvium.community",
+        "keyTasks":[
+            "next two",
+            "next three"
+        ]
+    }
+]
