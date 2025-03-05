@@ -23,8 +23,14 @@
         "type": "sw",
         "email": "nihit.yadav@kalvium.community",
         "keyTasks":[
-            "next two",
-            "next three"
+            "next two"
+        ]
+    },{
+        "type": "sw",
+        "email": "arsalan.hassan@kalvium.community",
+        "keyTasks":[
+            "java"
         ]
     }
+
 ]
