@@ -31,6 +31,13 @@
         "keyTasks":[
             "java"
         ]
+    },
+    {
+        "type": "sw",
+        "email": "somendra.swaroop@kalvium.community",
+        "keyTasks":[
+            "done next task"
+        ]
     }
 
 ]
