@@ -166,7 +166,7 @@ cron.schedule(
             const formValues = getFormValues(person);
             const requestBody = createRequestBody(person, formValues);
             submitForm(requestBody);
-            await new Promise(resolve => setTimeout(resolve, 5000)); // 5 seconds delay
+            await new Promise(resolve => setTimeout(resolve, 10 * 1000)); // 10 seconds delay
             }
         })();
     },
