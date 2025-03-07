@@ -6,3 +6,4 @@ node_modules/
 
 # Ignore temp files
 temp.js
+temp_folks.json

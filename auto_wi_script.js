@@ -79,18 +79,14 @@ function submitForm(requestBody) {
       .then((response) => response.json())
       .then((data) => {
         let status = data.open_thankyou_page_URL_in == 1 ? 'Success' : 'Failed'
-        let emailMessage = `Status: ${status}\nKey Tasks: ${
+        let emailMessage = `Status: ${status}\n\nKey Tasks: ${
           requestBody.MultiLine || 'N/A'
         }`
         if (requestBody.MultiLine6) {
-          emailMessage += `\nMeeting Highlights: ${requestBody.MultiLine6}`
+          emailMessage += `\n\nMeeting Highlights: ${requestBody.MultiLine6}`
         }
-        emailMessage += `\nResponse Data: ${JSON.stringify(data)}`
-        sendEmail(
-          'Auto Form Submission Report',
-          emailMessage,
-          requestBody.Email
-        )
+        emailMessage += `\n\nResponse Data: ${JSON.stringify(data)}`
+        sendEmail('Auto Form Submission Report', emailMessage, requestBody.Email)
       })
       .catch((error) => {
         console.error('Error:', error)
