@@ -38,5 +38,13 @@
         "keyTasks":[
             "done next task"
         ]
+    },
+    {
+        "type": "sw",
+        "email": "kumar.shubham@kalvium.community",
+        "keyTasks":[
+            "."
+        ]
     }
+
 ]
